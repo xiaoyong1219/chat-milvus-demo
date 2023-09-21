@@ -8,12 +8,13 @@ import com.mao.milvus.demo.service.MilvusService;
 import com.mao.milvus.demo.utils.Content;
 import com.mao.milvus.demo.vo.ReplyMsg;
 import io.milvus.param.dml.InsertParam;
-import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -54,7 +55,9 @@ public class DocsController {
     private ReplyMsg insertVector(List<String> sentenceList){
         // 1.获得向量
         EmbeddingResponse embeddings = chatClient.embeddings(sentenceList);
-        List<List<Float>> vectors = embeddings.getData().stream().map(EmbeddingData::getEmbedding).toList();
+        List<List<Float>> vectors = embeddings.getData().stream()
+                .map(EmbeddingData::getEmbedding)
+                .collect(Collectors.toList());
         // 2.准备插入向量数据库
         List<InsertParam.Field> fields = new ArrayList<>();
         fields.add(new InsertParam.Field(Content.Field.CONTENT, sentenceList));

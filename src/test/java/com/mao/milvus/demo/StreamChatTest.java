@@ -5,7 +5,6 @@ import com.mao.milvus.demo.client.chat.ChatCompletion;
 import com.mao.milvus.demo.client.chat.Message;
 import com.mao.milvus.demo.client.listener.ConsoleStreamListener;
 import com.mao.milvus.demo.client.listener.SseStreamListener;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -28,7 +29,7 @@ public class StreamChatTest {
         ConsoleStreamListener listener = new ConsoleStreamListener();
         Message message = Message.of("沧浪之水清兮");
         ChatCompletion chatCompletion = ChatCompletion.builder()
-                .messages(List.of(message))
+                .messages(Arrays.asList(message))
                 .build();
         chatClientStream.streamChatCompletion(chatCompletion, listener);
 
@@ -53,7 +54,7 @@ public class StreamChatTest {
         listener.setOnComplate(msg -> {
             //回答完成，可以做一些事情
         });
-        chatClientStream.streamChatCompletion(List.of(message), listener);
+        chatClientStream.streamChatCompletion(Arrays.asList(message), listener);
 
 
         return sseEmitter;

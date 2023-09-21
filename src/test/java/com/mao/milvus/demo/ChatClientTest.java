@@ -3,9 +3,10 @@ package com.mao.milvus.demo;
 import com.mao.milvus.demo.client.ChatClient;
 import com.mao.milvus.demo.client.embeddings.EmbeddingResponse;
 import com.mao.milvus.demo.client.embeddings.Usage;
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.annotation.Resource;
 
 @SpringBootTest
 public class ChatClientTest {

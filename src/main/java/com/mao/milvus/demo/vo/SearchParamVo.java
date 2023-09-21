@@ -4,6 +4,7 @@ import com.mao.milvus.demo.utils.Content;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ public class SearchParamVo {
     @Builder.Default
     private Integer topK = 5;
     @Builder.Default
-    private List<String> outputFields = List.of(Content.Field.CONTENT);
+    private List<String> outputFields = Arrays.asList(Content.Field.CONTENT);
     @Builder.Default
     private String params = "{\"nprobe\":10}";
     private String expr;

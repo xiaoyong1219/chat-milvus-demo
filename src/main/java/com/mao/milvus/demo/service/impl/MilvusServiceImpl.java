@@ -24,10 +24,10 @@ import io.milvus.param.partition.LoadPartitionsParam;
 import io.milvus.param.partition.ReleasePartitionsParam;
 import io.milvus.response.QueryResultsWrapper;
 import io.milvus.response.SearchResultsWrapper;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

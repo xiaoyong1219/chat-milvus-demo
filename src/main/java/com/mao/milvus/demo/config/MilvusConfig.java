@@ -13,15 +13,12 @@ public class MilvusConfig {
 
     @Value("${milvus.url}")
     private String url;
-    @Value("${milvus.token}")
-    private String token;
 
     @Bean
     public MilvusServiceClient milvusServiceClient() {
         log.info("Connecting to DB: {}", url);
         ConnectParam connectParam = ConnectParam.newBuilder()
                 .withUri(url)
-                .withToken(token)
                 .build();
         return new MilvusServiceClient(connectParam);
     }

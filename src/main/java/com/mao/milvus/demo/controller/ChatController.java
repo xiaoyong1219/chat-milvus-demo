@@ -8,13 +8,13 @@ import com.mao.milvus.demo.client.embeddings.EmbeddingResponse;
 import com.mao.milvus.demo.service.MilvusService;
 import com.mao.milvus.demo.utils.Content;
 import com.mao.milvus.demo.vo.*;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 

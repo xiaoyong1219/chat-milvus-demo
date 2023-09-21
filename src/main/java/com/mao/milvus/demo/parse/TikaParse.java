@@ -15,8 +15,9 @@ import java.util.List;
 public class TikaParse implements DocPrase {
     private static final int MAX_LENGTH = 250;
 
+    @Override
     public List<String> parse(InputStream inputStream) throws Exception {
-        try (inputStream) {
+        try{
             // Create a Tika parser
             Parser autoDetectParser = new AutoDetectParser();
             ParseContext context = new ParseContext();
@@ -40,17 +41,24 @@ public class TikaParse implements DocPrase {
                     currentParagraph.append(sentence).append(".");
                     currentLength += (sentence.length() + 1);
                 } else {
-                    paragraphs.add(currentParagraph.toString().strip());
+                    paragraphs.add(currentParagraph.toString().trim());
                     currentParagraph = new StringBuilder(sentence + ".");
                     currentLength = (sentence.length() + 1);;
                 }
             }
             // Add the last paragraph
-            paragraphs.add(currentParagraph.toString().strip());
+            paragraphs.add(currentParagraph.toString().trim());
             paragraphs.forEach(System.out::println);
             // return list
             return paragraphs;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }finally {
+            if(inputStream != null){
+                inputStream.close();
+            }
         }
+        return null;
     }
 
 }

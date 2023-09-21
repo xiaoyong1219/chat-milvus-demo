@@ -1,8 +1,7 @@
 server:
   port: 8080
 milvus:
-  url: https://***************************.zillizcloud.com
-  token: 36013f36****************************15662302870780a
+  url: http://119.91.202.137:19530
 chat:
-  key: GNR*******************EGgi
-  secret: OFWG*******************jA4
+  key: PFQ6tUGlrnOuq7OnUPpZT7mw
+  secret: lpcPdINQmZ8rZnrGI79EwhwDsuO4n9y1

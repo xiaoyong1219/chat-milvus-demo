@@ -19,17 +19,19 @@ import io.milvus.param.dml.InsertParam;
 import io.milvus.param.dml.SearchParam;
 import io.milvus.response.QueryResultsWrapper;
 import io.milvus.response.SearchResultsWrapper;
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class MilvusServiceTest {
@@ -82,7 +84,9 @@ public class MilvusServiceTest {
         sentenceList.add("9月2日14时至3日14时，受“苏拉”影响，南海西北部、北部湾东部、琼州海峡及广东中西部沿海、广西南部沿海、海南北部沿海、珠江口以及香港和澳门等地将有6-8级、阵风9-10级的大风，“苏拉”中心经过的附近海面或地区风力有11-12级、阵风13-14级；受“海葵”影响，台湾海峡、巴士海峡、浙江南部沿海、福建沿海、广东东部沿海、台湾岛沿海将有6-8级，阵风9-10级大风，台湾以东洋面部分海域风力可达9-12级，阵风13-14级，“海葵”中心经过的附近海面风力可达13-16级，阵风17级及以上。中央气象台9月2日10时继续发布台风红色预警。");
         // 1.获得向量
         EmbeddingResponse embeddings = chatClient.embeddings(sentenceList);
-        List<List<Float>> vectors = embeddings.getData().stream().map(EmbeddingData::getEmbedding).toList();
+        List<List<Float>> vectors = embeddings.getData().stream()
+                .map(EmbeddingData::getEmbedding)
+                .collect(Collectors.toList());
         // 2.准备插入向量数据库
         List<InsertParam.Field> fields = new ArrayList<>();
         fields.add(new InsertParam.Field(Content.Field.CONTENT, sentenceList));
@@ -142,8 +146,8 @@ public class MilvusServiceTest {
     @Test
     void loadData() throws IOException {
         // Read the dataset file
-        Path file = Path.of("src/main/resources/data/medium_articles_2020_dpr.json");
-        String content = Files.readString(file);
+        Path filePath = Paths.get("src/main/resources/data/medium_articles_2020_dpr.json");
+        String content = new String(Files.readAllBytes(filePath));
         // Load dataset
         JSONObject dataset = JSON.parseObject(content);
         List<JSONObject> rows = getRows(dataset.getJSONArray("rows"), 2);
@@ -169,8 +173,9 @@ public class MilvusServiceTest {
 
     @Test
     void getFileds() throws IOException {
-        Path file = Path.of("src/main/resources/data/medium_articles_2020_dpr.json");
-        String content = Files.readString(file);
+        Path filePath = Paths.get("src/main/resources/data/medium_articles_2020_dpr.json");
+        String content = new String(Files.readAllBytes(filePath));
+
         // Load dataset
         JSONObject dataset = JSON.parseObject(content);
         List<InsertParam.Field> field = getFields(dataset.getJSONArray("rows"), 1);
@@ -213,8 +218,8 @@ public class MilvusServiceTest {
     @Test
     void searchTopKSimilarity() throws IOException {
         // Search data
-        Path file = Path.of("src/main/resources/data/medium_articles_2020_dpr.json");
-        String content = Files.readString(file);
+        Path filePath = Paths.get("src/main/resources/data/medium_articles_2020_dpr.json");
+        String content = new String(Files.readAllBytes(filePath));
         // Load dataset
         JSONObject dataset = JSON.parseObject(content);
         List<JSONObject> rows = getRows(dataset.getJSONArray("rows"), 10);
